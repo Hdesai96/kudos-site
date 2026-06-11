@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kudos (KUDS) — The token you can't buy</title>
+<meta name="description" content="Kudos (KUDS) is a non-financial social recognition token on Solana. Fixed supply of 500. Worth $0 by design. The only way to get one is to be kind.">
+<meta property="og:title" content="Kudos (KUDS) — The token you can't buy">
+<meta property="og:description" content="A social recognition token worth $0 by design. 500 exist, forever. The only way to earn one is kindness.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
+<link rel="icon" href="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EC;
+    --paper-2:#F4ECDC;
+    --ink:#2A241D;
+    --ink-soft:#5C5145;
+    --ink-faint:#8A7E6E;
+    --gold:#C29A3B;
+    --gold-deep:#A47C22;
+    --terra:#C16640;
+    --line:#E2D6BF;
+    --card:#FFFDF8;
+    --shadow:rgba(74,58,34,.10);
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+  a{color:var(--gold-deep)}
+
+  /* NAV */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  .brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 3px 10px rgba(164,124,34,.35)}
+  .brand small{display:block;font-weight:500;font-size:11px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase}
+  .nav-links{display:flex;gap:22px;font-size:14px;font-weight:600}
+  .nav-links a{color:var(--ink-soft);text-decoration:none}
+  .nav-links a:hover{color:var(--gold-deep)}
+  @media(max-width:560px){.nav-links{display:none}}
+
+  /* HERO */
+  header{padding:72px 0 36px;text-align:center}
+  .eyebrow{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:22px}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(40px,6.6vw,76px);line-height:1.04;letter-spacing:-.02em}
+  h1 em{font-style:italic;color:var(--terra)}
+  .sub{max-width:580px;margin:24px auto 0;font-size:18px;color:var(--ink-soft)}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .btn{font-family:inherit;font-size:15px;font-weight:600;padding:14px 30px;border-radius:32px;cursor:pointer;
+    text-decoration:none;transition:.25s;display:inline-block}
+  .btn-primary{background:linear-gradient(90deg,var(--gold),var(--terra));color:#fff;border:none;
+    box-shadow:0 10px 26px -10px rgba(193,102,64,.55)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(193,102,64,.65)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--gold)}
+
+  /* TICKER — the signature */
+  .ticker{max-width:720px;margin:64px auto 0;background:var(--card);border:1px solid var(--line);
+    border-radius:20px;box-shadow:0 22px 50px -34px var(--shadow);overflow:hidden}
+  .ticker-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--line)}
+  .pair{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:14px;font-weight:700}
+  .pair img{width:26px;height:26px;border-radius:50%}
+  .live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.08em}
+  .dot{width:7px;height:7px;border-radius:50%;background:#6FA86B;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .ticker-body{padding:26px 24px 8px;text-align:left}
+  .price{font-family:var(--mono);font-size:54px;font-weight:700;line-height:1;letter-spacing:-.02em}
+  .price-meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);margin-top:8px}
+  .price-meta b{color:#6FA86B;font-weight:500}
+  .chart{display:block;width:100%;height:150px;margin-top:6px}
+  .ticker-foot{padding:14px 24px 20px;font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink-soft);
+    border-top:1px dashed var(--line);text-align:center}
+  @media(prefers-reduced-motion:reduce){.dot{animation:none}}
+
+  /* SECTIONS */
+  section{padding:84px 0 0}
+  .sec-eyebrow{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:14px}
+  h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;margin-bottom:14px}
+  .lede{max-width:620px;color:var(--ink-soft);font-size:17px}
+
+  /* NUMBERS */
+  .numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:40px}
+  .num-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;
+    box-shadow:0 14px 34px -28px var(--shadow)}
+  .num{font-family:'Fraunces',serif;font-weight:900;font-size:44px;color:var(--gold-deep);line-height:1}
+  .num-label{font-size:14px;font-weight:600;margin-top:10px}
+  .num-sub{font-size:13px;color:var(--ink-faint);margin-top:4px;line-height:1.5}
+
+  /* HOW */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;position:relative}
+  .step-n{font-family:'Fraunces',serif;font-size:13px;color:var(--gold-deep);font-weight:600;letter-spacing:.12em}
+  .step-t{font-weight:700;font-size:16px;margin-top:10px}
+  .step-d{font-size:14px;color:var(--ink-soft);margin-top:6px;line-height:1.55}
+
+  /* VERIFY */
+  .verify{margin-top:40px;background:linear-gradient(135deg,var(--ink),#3d342a);border-radius:22px;padding:44px 38px;color:var(--paper);
+    position:relative;overflow:hidden}
+  .verify::before{content:"";position:absolute;top:-50%;right:-8%;width:300px;height:300px;border-radius:50%;
+    background:radial-gradient(circle,rgba(194,154,59,.18),transparent 70%)}
+  .verify h3{font-family:'Fraunces',serif;font-weight:500;font-size:26px;margin-bottom:10px;position:relative}
+  .verify p{color:#D8CCB8;max-width:560px;position:relative}
+  .mint-box{margin-top:24px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:12px;
+    padding:16px 18px;font-family:var(--mono);font-size:13px;word-break:break-all;position:relative;display:flex;
+    align-items:center;gap:12px;flex-wrap:wrap}
+  .mint-label{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#C3B7A2;width:100%}
+  .copy-btn{font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);color:var(--paper);cursor:pointer;transition:.2s}
+  .copy-btn:hover{background:rgba(255,255,255,.16)}
+  .verify-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;position:relative}
+  .verify-links a{color:var(--gold);font-weight:600;font-size:14px;text-decoration:none}
+  .verify-links a:hover{text-decoration:underline}
+
+  /* NOT */
+  .nots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:36px}
+  .not{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;font-size:15px}
+  .not b{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin-bottom:5px}
+  .not span{color:var(--ink-soft);font-size:14px}
+
+  /* JOIN */
+  .join-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px}
+  .join-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;
+    box-shadow:0 14px 34px -28px var(--shadow);transition:transform .3s}
+  .join-card:hover{transform:translateY(-3px)}
+  .join-card h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:8px}
+  .join-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:16px}
+  .join-card a{font-weight:600;font-size:14px;text-decoration:none}
+  .join-card a:hover{text-decoration:underline}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);margin-top:90px;padding:44px 0 56px;text-align:center}
+  .foot-creed{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:20px}
+  .foot-meta{font-size:12.5px;color:var(--ink-faint);line-height:1.8}
+  .foot-meta code{background:var(--paper-2);padding:2px 7px;border-radius:5px;font-size:11.5px;font-family:var(--mono)}
+  .disclaimer{max-width:640px;margin:20px auto 0;font-size:11.5px;color:var(--ink-faint);line-height:1.65}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">
+      <img src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="KUDS logo">
+      <div>Kudos<small>KUDS · Solana Mainnet</small></div>
+    </div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="wall.html">Wall</a>
+      <a href="nominate.html">Nominate</a>
+      <a href="#verify">Verify</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="eyebrow">A social recognition token</div>
+    <h1>The token you<br><em>can't buy.</em></h1>
+    <p class="sub">Kudos (KUDS) lives on the Solana blockchain. 500 exist, forever. There's no price, no exchange, no trading. The only way to get one is for someone to decide you were kind.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="nominate.html">Nominate someone</a>
+      <a class="btn btn-ghost" href="https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ" target="_blank" rel="noopener">Verify on-chain</a>
+    </div>
+
+    <!-- Signature: the flatline ticker -->
+    <div class="ticker">
+      <div class="ticker-head">
+        <div class="pair">
+          <img src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="">
+          KUDS / USD
+        </div>
+        <div class="live"><span class="dot"></span>LIVE · ALL-TIME CHART</div>
+      </div>
+      <div class="ticker-body">
+        <div class="price">$0.00</div>
+        <div class="price-meta">24h change: <b>±0.00%</b> &nbsp;·&nbsp; All-time high: $0.00 &nbsp;·&nbsp; All-time low: $0.00</div>
+        <svg class="chart" viewBox="0 0 600 150" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0" y1="120" x2="600" y2="120" stroke="#C29A3B" stroke-width="2.5"/>
+          <circle cx="592" cy="120" r="4" fill="#C16640"/>
+          <g stroke="#E2D6BF" stroke-width="1" stroke-dasharray="3,5">
+            <line x1="0" y1="30" x2="600" y2="30"/>
+            <line x1="0" y1="75" x2="600" y2="75"/>
+          </g>
+          <text x="8" y="24" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$1.00</text>
+          <text x="8" y="69" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$0.50</text>
+          <text x="8" y="114" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$0.00</text>
+        </svg>
+      </div>
+      <div class="ticker-foot">Projected price, forever. That's the whole point.</div>
+    </div>
+  </header>
+
+  <section id="numbers">
+    <div class="sec-eyebrow">The numbers</div>
+    <h2>Deliberately small. Deliberately worthless.</h2>
+    <div class="numbers">
+      <div class="num-card">
+        <div class="num">500</div>
+        <div class="num-label">Total supply</div>
+        <div class="num-sub">Minted once. No more will ever exist.</div>
+      </div>
+      <div class="num-card">
+        <div class="num">$0</div>
+        <div class="num-label">Price, forever</div>
+        <div class="num-sub">No exchange listings. No liquidity pools. No trading. By design.</div>
+      </div>
+      <div class="num-card">
+        <div class="num">1</div>
+        <div class="num-label">Way to earn it</div>
+        <div class="num-sub">Be kind. Someone notices. The community agrees.</div>
+      </div>
+      <div class="num-card">
+        <div class="num">∞</div>
+        <div class="num-label">How long it lasts</div>
+        <div class="num-sub">Every award is recorded on Solana, permanently and publicly.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="sec-eyebrow">How it works</div>
+    <h2>From a kind act to a permanent record.</h2>
+    <p class="lede">No applications, no purchases, no points to grind. Recognition starts with someone else noticing what you did.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">STEP 1</div><div class="step-t">An act of kindness</div><div class="step-d">Someone helps, mentors, supports, or quietly fixes the thing so others won't trip on it.</div></div>
+      <div class="step"><div class="step-n">STEP 2</div><div class="step-t">A peer nominates</div><div class="step-d">Another community member notices and puts the act forward for recognition.</div></div>
+      <div class="step"><div class="step-n">STEP 3</div><div class="step-t">The community agrees</div><div class="step-d">Members confirm it reflects the spirit of KUDS — genuine, generous, human.</div></div>
+      <div class="step"><div class="step-n">STEP 4</div><div class="step-t">Written to stay</div><div class="step-d">One KUDS transfers to their wallet. The record lives on Solana for as long as the network does.</div></div>
+    </div>
+  </section>
+
+  <section id="not">
+    <div class="sec-eyebrow">Read this part</div>
+    <h2>What KUDS is not.</h2>
+    <div class="nots">
+      <div class="not"><b>Not an investment</b><span>It pays nothing, returns nothing, and promises nothing. There is no profit to expect.</span></div>
+      <div class="not"><b>Not for sale</b><span>You can't buy it anywhere, and the project will never create a place to sell it.</span></div>
+      <div class="not"><b>Not redeemable</b><span>It can't be exchanged for money, goods, or services. It's a badge of honor, full stop.</span></div>
+      <div class="not"><b>Not a competition</b><span>The leaderboard celebrates character, not rank. There are no prizes to win.</span></div>
+    </div>
+  </section>
+
+  <section id="verify">
+    <div class="sec-eyebrow">Don't trust — verify</div>
+    <h2>It's real. Go look.</h2>
+    <div class="verify">
+      <h3>Live on Solana mainnet</h3>
+      <p>Every claim on this page is publicly checkable. The supply, the transfers, every award ever given — all of it sits on an open ledger anyone can read, no account required.</p>
+      <div class="mint-box">
+        <span class="mint-label">Token mint address</span>
+        <span id="mintAddr">7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ</span>
+        <button class="copy-btn" id="copyBtn">Copy</button>
+      </div>
+      <div class="verify-links">
+        <a href="https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ" target="_blank" rel="noopener">View on Solscan →</a>
+        <a href="https://github.com/Hdesai96/kudos-token" target="_blank" rel="noopener">Token repository →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="sec-eyebrow">Take part</div>
+    <h2>Help us make kindness visible.</h2>
+    <p class="lede">KUDS only works if people notice each other. That's the entire mechanism.</p>
+    <div class="join-cards">
+      <div class="join-card">
+        <h4>See the Wall of Kindness</h4>
+        <p>Every KUDS ever awarded, and the story behind each one.</p>
+        <a href="wall.html">Visit the Wall →</a>
+      </div>
+      <div class="join-card">
+        <h4>Read the whitepaper</h4>
+        <p>The full philosophy: tokenomics, governance, and the anti-speculation design.</p>
+        <a href="Kudos_KUDS_Token_Whitepaper_Mainnet.pdf" target="_blank" rel="noopener">Read it →</a>
+      </div>
+      <div class="join-card">
+        <h4>Nominate someone</h4>
+        <p>Seen an act of kindness that deserves to be permanent? Tell us about it.</p>
+        <a href="nominate.html">Submit a nomination →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-creed">"Worth nothing. Means everything."</p>
+    <div class="foot-meta">
+      Kudos (KUDS) · SPL Token on Solana Mainnet<br>
+      Mint <code>7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ</code><br>
+      Total supply 500 · no exchange listings · no monetary value
+    </div>
+    <p class="disclaimer">
+      KUDS is a non-financial social recognition token. It is not a security, investment product, or financial
+      instrument of any kind. It carries no monetary value by design, pays no returns, and cannot be bought, sold,
+      traded, or redeemed for currency, goods, or services through any mechanism endorsed by the Kudos Project.
+      It exists solely to acknowledge and celebrate positive contributions within communities.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    const addr = document.getElementById('mintAddr').textContent.trim();
+    navigator.clipboard.writeText(addr).then(()=>{
+      this.textContent = 'Copied ✓';
+      setTimeout(()=>{ this.textContent = 'Copy'; }, 2000);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nominate someone · Kudos (KUDS)</title>
+<meta name="description" content="Seen an act of kindness that deserves to be permanent? Nominate someone for a Kudos (KUDS) token.">
+<meta property="og:title" content="Nominate someone for Kudos">
+<meta property="og:description" content="Recognition starts when someone notices. Tell us about an act of kindness worth recording forever.">
+<meta property="og:image" content="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
+<link rel="icon" href="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EC; --paper-2:#F4ECDC; --ink:#2A241D; --ink-soft:#5C5145;
+    --ink-faint:#8A7E6E; --gold:#C29A3B; --gold-deep:#A47C22; --terra:#C16640;
+    --line:#E2D6BF; --card:#FFFDF8; --shadow:rgba(74,58,34,.10); --mono:'JetBrains Mono',monospace;
+    --err:#B4543A; --ok:#5E7F4E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;position:relative}
+  a{color:var(--gold-deep)}
+
+  nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  .brand img{width:38px;height:38px;border-radius:50%;box-shadow:0 3px 10px rgba(164,124,34,.35)}
+  .brand small{display:block;font-weight:500;font-size:11px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase}
+  .back{font-size:14px;font-weight:600;color:var(--ink-soft);text-decoration:none}
+  .back:hover{color:var(--gold-deep)}
+
+  header{padding:56px 0 8px;text-align:center}
+  .eyebrow{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:20px}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-.02em}
+  h1 em{font-style:italic;color:var(--terra)}
+  .sub{max-width:520px;margin:22px auto 0;font-size:17px;color:var(--ink-soft)}
+
+  /* criteria strip */
+  .criteria{margin:44px 0 0;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:24px 26px}
+  .criteria h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin-bottom:12px}
+  .criteria ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 22px}
+  .criteria li{font-size:14.5px;color:var(--ink-soft);padding-left:22px;position:relative}
+  .criteria li::before{content:"♦";position:absolute;left:0;color:var(--gold);font-size:11px;top:3px}
+  @media(max-width:560px){.criteria ul{grid-template-columns:1fr}}
+
+  /* FORM — the signature */
+  .form-card{margin:30px 0 0;background:var(--card);border:1px solid var(--line);border-radius:22px;
+    padding:38px 34px;box-shadow:0 24px 54px -36px var(--shadow)}
+  .form-card .lead{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:28px;text-align:center}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:7px}
+  .field .hint{font-weight:400;color:var(--ink-faint);font-size:12.5px;margin-left:6px}
+  .field input,.field textarea,.field select{width:100%;font-family:inherit;font-size:15px;padding:13px 15px;
+    border-radius:11px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);transition:.2s;resize:vertical}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold);background:#fff;
+    box-shadow:0 0 0 4px rgba(194,154,59,.12)}
+  .field input::placeholder,.field textarea::placeholder{color:#a89c89}
+  .field textarea{min-height:120px;line-height:1.55}
+  .counter{text-align:right;font-size:12px;color:var(--ink-faint);margin-top:5px;font-family:var(--mono)}
+  .err-msg{color:var(--err);font-size:13px;margin-top:6px;display:none}
+  .field.invalid input,.field.invalid textarea{border-color:var(--err)}
+  .field.invalid .err-msg{display:block}
+
+  /* category pills */
+  .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .cat{border:1.5px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:.2s;background:var(--paper)}
+  .cat:hover{border-color:var(--gold)}
+  .cat.sel{border-color:var(--terra);background:#fff;box-shadow:0 0 0 3px rgba(193,102,64,.1)}
+  .cat .ct{font-weight:700;font-size:14px}
+  .cat .cd{font-size:12.5px;color:var(--ink-faint);margin-top:3px;line-height:1.4}
+
+  .submit{width:100%;font-family:inherit;font-size:16px;font-weight:600;padding:16px;border-radius:32px;border:none;
+    cursor:pointer;background:linear-gradient(90deg,var(--gold),var(--terra));color:#fff;margin-top:8px;transition:.25s;
+    box-shadow:0 12px 28px -12px rgba(193,102,64,.55)}
+  .submit:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(193,102,64,.65)}
+  .submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .form-foot{text-align:center;font-size:12.5px;color:var(--ink-faint);margin-top:16px}
+
+  /* success state */
+  .success{display:none;text-align:center;padding:30px 10px}
+  .success.show{display:block;animation:rise .5s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .success .coin{width:72px;height:72px;border-radius:50%;margin:0 auto 18px;display:block;box-shadow:0 8px 22px rgba(164,124,34,.4)}
+  .success h2{font-family:'Fraunces',serif;font-weight:500;font-size:28px;margin-bottom:10px}
+  .success p{color:var(--ink-soft);max-width:420px;margin:0 auto 8px}
+  .success .again{margin-top:22px;font-weight:600;font-size:14px;background:none;border:none;color:var(--gold-deep);cursor:pointer}
+  .success .again:hover{text-decoration:underline}
+
+  /* what happens next */
+  .next{margin:56px 0 0}
+  .next h3{font-family:'Fraunces',serif;font-weight:500;font-size:26px;margin-bottom:6px;text-align:center}
+  .next .nlede{text-align:center;color:var(--ink-soft);max-width:460px;margin:0 auto 30px}
+  .steps{display:grid;gap:12px}
+  .step{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px}
+  .step .sn{font-family:'Fraunces',serif;font-weight:900;font-size:22px;color:var(--gold);line-height:1;min-width:28px}
+  .step .st{font-weight:700;font-size:15px}
+  .step .sd{font-size:14px;color:var(--ink-soft);margin-top:2px}
+
+  footer{border-top:1px solid var(--line);margin-top:64px;padding:40px 0 54px;text-align:center}
+  .foot-creed{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ink-soft);margin-bottom:18px}
+  .foot-meta{font-size:12.5px;color:var(--ink-faint);line-height:1.8}
+  .foot-meta code{background:var(--paper-2);padding:2px 7px;border-radius:5px;font-size:11px;font-family:var(--mono)}
+  .disclaimer{max-width:560px;margin:18px auto 0;font-size:11.5px;color:var(--ink-faint);line-height:1.6}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">
+      <img src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="KUDS logo">
+      <div>Kudos<small>KUDS · Solana</small></div>
+    </div>
+    <a class="back" href="index.html">← Back to home</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">Recognition starts with you</div>
+    <h1>Nominate someone <em>kind.</em></h1>
+    <p class="sub">You can't ask for a KUDS. Someone has to notice you. So if you've seen an act of generosity that deserves to be permanent, this is where you say so. Nominating is itself an act of kindness.</p>
+  </header>
+
+  <div class="criteria">
+    <h3>What makes a good nomination</h3>
+    <ul>
+      <li>Patient mentorship of a newcomer</li>
+      <li>Technical help given freely</li>
+      <li>Emotional support in a hard moment</li>
+      <li>A creative contribution that lifts others</li>
+      <li>Quietly fixing what others would trip on</li>
+      <li>Showing up, consistently, over time</li>
+    </ul>
+  </div>
+
+  <!-- THE FORM -->
+  <div class="form-card" id="formCard">
+    <p class="lead">Tell us who, and tell us why.</p>
+    <form id="nomForm" novalidate>
+
+      <div class="field" id="f-who">
+        <label>Who are you recognizing? <span class="hint">name or community handle</span></label>
+        <input type="text" name="recipient" placeholder="e.g. Maya, or @mayacodes" autocomplete="off">
+        <div class="err-msg">Let us know who this is for.</div>
+      </div>
+
+      <div class="field">
+        <label>Their Solana wallet <span class="hint">optional — if you know it</span></label>
+        <input type="text" name="wallet" placeholder="Their wallet address, if you have it" autocomplete="off">
+      </div>
+
+      <div class="field" id="f-story">
+        <label>What did they do? <span class="hint">be specific — that's what makes it matter</span></label>
+        <textarea name="story" maxlength="600" placeholder="Tell the story. What happened, and why did it stay with you?"></textarea>
+        <div class="counter"><span id="cnt">0</span>/600</div>
+        <div class="err-msg">A sentence or two is plenty — we'd love the story.</div>
+      </div>
+
+      <div class="field" id="f-cat">
+        <label>What kind of kindness?</label>
+        <div class="cats">
+          <div class="cat" data-val="Mentorship"><div class="ct">Mentorship</div><div class="cd">Teaching, guiding, patience with beginners</div></div>
+          <div class="cat" data-val="Support"><div class="ct">Support</div><div class="cd">Showing up for someone who needed it</div></div>
+          <div class="cat" data-val="Contribution"><div class="ct">Contribution</div><div class="cd">Building or fixing something for everyone</div></div>
+          <div class="cat" data-val="Something extraordinary"><div class="ct">Something extraordinary</div><div class="cd">A once-in-a-while act worth remembering</div></div>
+        </div>
+        <input type="hidden" name="category" id="catInput">
+        <div class="err-msg">Pick the one that fits best.</div>
+      </div>
+
+      <div class="field">
+        <label>Where did this happen? <span class="hint">optional — community, server, context</span></label>
+        <input type="text" name="context" placeholder="e.g. our Discord, a study group, online" autocomplete="off">
+      </div>
+
+      <div class="field" id="f-by">
+        <label>Your name <span class="hint">so we can credit the nomination</span></label>
+        <input type="text" name="nominator" placeholder="Your name or handle" autocomplete="off">
+        <div class="err-msg">Tell us who's nominating.</div>
+      </div>
+
+      <div class="field">
+        <label>Your email <span class="hint">optional — only if you'd like a reply</span></label>
+        <input type="email" name="email" placeholder="you@example.com" autocomplete="off">
+        <div class="err-msg">That email doesn't look right.</div>
+      </div>
+
+      <button type="submit" class="submit" id="submitBtn">Send this nomination</button>
+      <p class="form-foot">Nominations are reviewed by the community before any KUDS is awarded.</p>
+    </form>
+
+    <!-- success -->
+    <div class="success" id="success">
+      <img class="coin" src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="">
+      <h2>Thank you for noticing.</h2>
+      <p>Your nomination is in. The community will review it, and if it reflects the spirit of KUDS, one token will be recorded on-chain in their name.</p>
+      <p>That small act of noticing? That counts too.</p>
+      <button class="again" id="againBtn">Nominate someone else</button>
+    </div>
+  </div>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <section class="next">
+    <h3>What happens after you hit send</h3>
+    <p class="nlede">No money changes hands. No one buys anything. Here's the whole path from your nomination to a permanent record.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div><div class="st">We read it</div><div class="sd">Every nomination is read by a real person, not a bot or an algorithm.</div></div></div>
+      <div class="step"><div class="sn">2</div><div><div class="st">The community weighs in</div><div class="sd">Members confirm the act reflects what KUDS stands for: genuine, generous, human.</div></div></div>
+      <div class="step"><div class="sn">3</div><div><div class="st">One KUDS is awarded</div><div class="sd">A single token transfers to the recipient's Solana wallet. No cost to them, ever.</div></div></div>
+      <div class="step"><div class="sn">4</div><div><div class="st">It's written to stay</div><div class="sd">The award is recorded on-chain and added to the Wall of Kindness, permanently.</div></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-creed">"Who earned it, and why?"</p>
+    <div class="foot-meta">
+      Kudos (KUDS) · SPL Token on Solana Mainnet<br>
+      Mint <code>7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ</code>
+    </div>
+    <p class="disclaimer">
+      KUDS is a non-financial social recognition token. It has no monetary value, cannot be bought, sold, or traded,
+      and is awarded solely to acknowledge positive contributions within communities.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // ====== CONFIG ======
+  // Paste your Formspree endpoint here to make submissions land in your inbox.
+  // Get one free at https://formspree.io — it looks like: https://formspree.io/f/abcdwxyz
+  const FORMSPREE_ENDPOINT = "REPLACE_WITH_YOUR_FORMSPREE_ENDPOINT";
+  // ====================
+
+  const form = document.getElementById('nomForm');
+  const success = document.getElementById('success');
+  const submitBtn = document.getElementById('submitBtn');
+  const story = form.story;
+  const cnt = document.getElementById('cnt');
+
+  // char counter
+  story.addEventListener('input', ()=> cnt.textContent = story.value.length);
+
+  // category selection
+  let chosenCat = "";
+  document.querySelectorAll('.cat').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      document.querySelectorAll('.cat').forEach(x=>x.classList.remove('sel'));
+      c.classList.add('sel');
+      chosenCat = c.dataset.val;
+      document.getElementById('catInput').value = chosenCat;
+      document.getElementById('f-cat').classList.remove('invalid');
+    });
+  });
+
+  function setInvalid(id, bad){
+    document.getElementById(id).classList.toggle('invalid', bad);
+    return !bad;
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    let ok = true;
+    ok &= setInvalid('f-who', form.recipient.value.trim()==="");
+    ok &= setInvalid('f-story', form.story.value.trim().length < 3);
+    ok &= setInvalid('f-cat', chosenCat==="");
+    ok &= setInvalid('f-by', form.nominator.value.trim()==="");
+    const email = form.email.value.trim();
+    ok &= setInvalid('f-by', form.nominator.value.trim()==="");
+    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ setInvalid('f-by', false); document.getElementById('f-by'); }
+    // email field is its own; validate separately
+    const emailField = form.email.closest('.field');
+    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ emailField.classList.add('invalid'); ok = false; }
+    else { emailField.classList.remove('invalid'); }
+
+    if(!ok){
+      const firstBad = document.querySelector('.field.invalid');
+      if(firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    const data = new FormData(form);
+
+    // If a real endpoint is configured, POST to Formspree. Otherwise run in demo mode.
+    const configured = FORMSPREE_ENDPOINT && !FORMSPREE_ENDPOINT.startsWith("REPLACE_");
+
+    try{
+      if(configured){
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method:"POST",
+          headers:{ "Accept":"application/json" },
+          body:data
+        });
+        if(!res.ok) throw new Error("submit failed");
+      } else {
+        // demo mode: brief pause so it feels real in preview
+        await new Promise(r=>setTimeout(r, 600));
+        console.log("DEMO MODE — nomination captured locally:", Object.fromEntries(data.entries()));
+      }
+      form.style.display = "none";
+      document.querySelector('.form-card .lead').style.display = "none";
+      success.classList.add('show');
+    }catch(err){
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send this nomination";
+      submitBtn.style.background = "var(--err)";
+      submitBtn.textContent = "Something went wrong — try again";
+      setTimeout(()=>{ submitBtn.style.background=""; submitBtn.textContent="Send this nomination"; }, 2600);
+    }
+  });
+
+  // nominate again
+  document.getElementById('againBtn').addEventListener('click', ()=>{
+    form.reset(); chosenCat=""; cnt.textContent="0";
+    document.querySelectorAll('.cat').forEach(x=>x.classList.remove('sel'));
+    document.querySelectorAll('.field').forEach(f=>f.classList.remove('invalid'));
+    success.classList.remove('show');
+    form.style.display = "block";
+    document.querySelector('.form-card .lead').style.display = "block";
+    submitBtn.disabled=false; submitBtn.textContent="Send this nomination";
+    document.getElementById('formCard').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wall of Kindness · Kudos (KUDS)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EC;
+    --paper-2:#F4ECDC;
+    --ink:#2A241D;
+    --ink-soft:#5C5145;
+    --ink-faint:#8A7E6E;
+    --gold:#C29A3B;
+    --gold-deep:#A47C22;
+    --terra:#C16640;
+    --line:#E2D6BF;
+    --card:#FFFDF8;
+    --shadow:rgba(74,58,34,.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* subtle paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.45;
+    background-image:radial-gradient(circle at 20% 30%, rgba(194,154,59,.05) 0, transparent 40%),
+                     radial-gradient(circle at 80% 70%, rgba(193,102,64,.045) 0, transparent 45%);
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+  /* ===== NAV ===== */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0 0}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.02em}
+  .coin{width:38px;height:38px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #F4D679, var(--gold) 55%, var(--gold-deep));
+    display:grid;place-items:center;color:#5b4410;font-family:'Fraunces',serif;font-weight:900;font-size:15px;
+    box-shadow:0 3px 10px rgba(164,124,34,.4), inset 0 1px 2px rgba(255,255,255,.6);}
+  .brand small{display:block;font-weight:500;font-size:11px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase}
+  .nav-tag{font-size:12px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase}
+
+  /* ===== HERO ===== */
+  header{padding:80px 0 50px;text-align:center;position:relative}
+  .eyebrow{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:24px}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(42px,7vw,82px);line-height:1.02;letter-spacing:-.02em;margin-bottom:8px}
+  h1 em{font-style:italic;color:var(--terra)}
+  .sub{max-width:560px;margin:26px auto 0;font-size:18px;color:var(--ink-soft)}
+  .creed{margin-top:34px;font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:var(--ink-soft)}
+
+  /* ===== COUNTER ===== */
+  .counter{margin:54px auto 0;max-width:620px;background:var(--card);border:1px solid var(--line);
+    border-radius:20px;padding:30px 36px;box-shadow:0 18px 40px -28px var(--shadow);position:relative;overflow:hidden}
+  .counter::after{content:"";position:absolute;top:-40%;right:-10%;width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle,rgba(194,154,59,.16),transparent 70%)}
+  .counter-row{display:flex;align-items:baseline;justify-content:center;gap:10px;position:relative;z-index:1}
+  .big-num{font-family:'Fraunces',serif;font-weight:900;font-size:64px;line-height:1;color:var(--gold-deep)}
+  .of{font-family:'Fraunces',serif;font-size:26px;color:var(--ink-faint)}
+  .counter-label{text-align:center;margin-top:6px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  .bar{height:10px;background:var(--paper-2);border-radius:6px;margin-top:22px;overflow:hidden;position:relative;z-index:1}
+  .bar-fill{height:100%;width:0;border-radius:6px;
+    background:linear-gradient(90deg,var(--gold),var(--terra));transition:width 1.6s cubic-bezier(.22,1,.36,1)}
+  .counter-foot{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--ink-faint)}
+
+  /* ===== CONTROLS ===== */
+  .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:64px 0 28px}
+  .section-h{font-family:'Fraunces',serif;font-size:30px;font-weight:500}
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-family:inherit;font-size:13px;padding:8px 16px;border-radius:30px;border:1px solid var(--line);
+    background:transparent;color:var(--ink-soft);cursor:pointer;transition:.2s;font-weight:500}
+  .chip:hover{border-color:var(--gold);color:var(--ink)}
+  .chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  /* ===== GRID ===== */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px;padding-bottom:20px}
+  .empty-state{grid-column:1/-1;text-align:center;padding:54px 30px;background:var(--card);border:1px dashed var(--line);
+    border-radius:20px;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+  .empty-state.in{opacity:1;transform:none}
+  .empty-coin{font-size:52px;margin-bottom:14px;filter:grayscale(.2)}
+  .empty-state h3{font-family:'Fraunces',serif;font-weight:500;font-size:28px;margin-bottom:10px}
+  .empty-state p{max-width:440px;margin:0 auto 22px;color:var(--ink-soft);font-size:16px}
+  .empty-btn{display:inline-block;font-weight:600;font-size:15px;text-decoration:none;color:#fff;
+    background:linear-gradient(90deg,var(--gold),var(--terra));padding:13px 28px;border-radius:30px;
+    box-shadow:0 10px 24px -12px rgba(193,102,64,.55);transition:.25s}
+  .empty-btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(193,102,64,.65)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;
+    box-shadow:0 14px 34px -28px var(--shadow);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;
+    display:flex;flex-direction:column;position:relative;opacity:0;transform:translateY(18px)}
+  .card.in{opacity:1;transform:none}
+  .card:hover{transform:translateY(-4px);box-shadow:0 26px 46px -28px var(--shadow)}
+  .card-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .avatar{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-family:'Fraunces',serif;
+    font-weight:600;font-size:20px;color:#fff;flex-shrink:0}
+  .recipient{font-weight:700;font-size:17px;line-height:1.2}
+  .recipient span{display:block;font-weight:500;font-size:12px;color:var(--ink-faint);margin-top:3px}
+  .tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:4px 10px;border-radius:20px;
+    align-self:flex-start;margin-bottom:14px}
+  .t-mentor{background:#EAF1E4;color:#5a7341}
+  .t-support{background:#F3E6DE;color:#a85a39}
+  .t-build{background:#E6ECF3;color:#3f5d82}
+  .t-hero{background:#F6ECCF;color:#9a7716}
+  .story{font-family:'Fraunces',serif;font-size:16.5px;line-height:1.5;color:var(--ink);flex-grow:1}
+  .nominated{font-size:13px;color:var(--ink-faint);margin-top:18px}
+  .nominated b{color:var(--ink-soft);font-weight:600}
+  .chain{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .chain a{font-size:12px;color:var(--gold-deep);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:5px}
+  .chain a:hover{text-decoration:underline}
+  .chain .date{font-size:12px;color:var(--ink-faint)}
+
+  /* ===== NOMINATE ===== */
+  .nominate{margin:72px 0;background:linear-gradient(135deg,var(--ink),#3d342a);border-radius:24px;padding:54px 44px;
+    text-align:center;color:var(--paper);position:relative;overflow:hidden}
+  .nominate::before{content:"🪙";position:absolute;font-size:200px;opacity:.05;right:-20px;bottom:-50px;transform:rotate(-12deg)}
+  .nominate h2{font-family:'Fraunces',serif;font-weight:500;font-size:34px;margin-bottom:14px;position:relative}
+  .nominate p{max-width:480px;margin:0 auto 28px;color:#D8CCB8;position:relative}
+  .steps{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px auto 34px;max-width:760px;position:relative}
+  .step{flex:1;min-width:130px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;padding:18px 14px;text-align:left}
+  .step .n{font-family:'Fraunces',serif;font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.1em}
+  .step .t{font-size:14px;font-weight:600;margin-top:8px}
+  .step .d{font-size:12.5px;color:#C3B7A2;margin-top:5px;line-height:1.45}
+  .btn{font-family:inherit;font-size:15px;font-weight:600;padding:15px 34px;border-radius:32px;border:none;cursor:pointer;
+    background:linear-gradient(90deg,var(--gold),var(--terra));color:#fff;transition:.25s;position:relative;
+    box-shadow:0 10px 26px -10px rgba(193,102,64,.6)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(193,102,64,.7)}
+
+  /* ===== FORM PANEL ===== */
+  .panel{max-height:0;overflow:hidden;transition:max-height .5s ease;margin-top:0}
+  .panel.open{max-height:680px;margin-top:28px}
+  .form-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;
+    padding:26px;text-align:left;max-width:560px;margin:0 auto}
+  .form-card label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#C3B7A2;margin:14px 0 6px;font-weight:600}
+  .form-card input,.form-card textarea,.form-card select{width:100%;font-family:inherit;font-size:15px;padding:12px 14px;
+    border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.18);color:var(--paper);resize:vertical}
+  .form-card input::placeholder,.form-card textarea::placeholder{color:#8c8170}
+  .form-msg{margin-top:14px;font-size:14px;color:var(--gold);min-height:20px;text-align:center}
+
+  /* ===== FOOTER ===== */
+  footer{border-top:1px solid var(--line);padding:46px 0 60px;text-align:center}
+  .foot-creed{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:22px}
+  .foot-meta{font-size:12.5px;color:var(--ink-faint);line-height:1.8}
+  .foot-meta code{background:var(--paper-2);padding:2px 7px;border-radius:5px;font-size:11.5px}
+  .disclaimer{max-width:620px;margin:22px auto 0;font-size:11.5px;color:var(--ink-faint);line-height:1.6}
+
+  @media(max-width:600px){
+    .controls{flex-direction:column;align-items:flex-start}
+    .nominate{padding:40px 24px}
+    .big-num{font-size:52px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="brand">
+      <div class="coin">K</div>
+      <div>Kudos<small>KUDS · Solana</small></div>
+    </div>
+    <div class="nav-tag" style="display:flex;gap:20px;align-items:center">
+      <a href="index.html" style="color:var(--ink-soft);text-decoration:none;font-weight:600;letter-spacing:normal;text-transform:none;font-size:14px">Home</a>
+      <a href="nominate.html" style="color:var(--gold-deep);text-decoration:none;font-weight:600;letter-spacing:normal;text-transform:none;font-size:14px">Nominate</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="eyebrow">Recognizing kindness · building community</div>
+    <h1>Every act of good,<br><em>written to stay.</em></h1>
+    <p class="sub">A token you can't buy, can't sell, and can't pump. The only way to earn a KUDS is for your community to decide you were kind — and then it's recorded forever.</p>
+    <p class="creed">"Who earned it, and why?"</p>
+
+    <div class="counter">
+      <div class="counter-row">
+        <span class="big-num" id="awarded">0</span>
+        <span class="of">of 500</span>
+      </div>
+      <div class="counter-label">Acts of kindness recognized on-chain</div>
+      <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+      <div class="counter-foot">
+        <span>Fixed supply · no new tokens, ever</span>
+        <span id="remaining">— remaining</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="section-h">The recognized</div>
+    <div class="filters" id="filters">
+      <button class="chip active" data-f="all">All</button>
+      <button class="chip" data-f="mentor">Mentorship</button>
+      <button class="chip" data-f="support">Support</button>
+      <button class="chip" data-f="build">Contribution</button>
+      <button class="chip" data-f="hero">Special</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <section class="nominate">
+    <h2>Know someone who deserves a KUDS?</h2>
+    <p>You don't apply for one. Someone has to notice you, and the community has to agree. Here's how an act of kindness becomes a permanent record.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><div class="t">An act of kindness</div><div class="d">Someone helps, mentors, supports, or shows up for the community.</div></div>
+      <div class="step"><div class="n">02</div><div class="t">A peer nominates</div><div class="d">Another member notices and submits it for recognition.</div></div>
+      <div class="step"><div class="n">03</div><div class="t">The community agrees</div><div class="d">Members confirm it reflects the spirit of KUDS.</div></div>
+      <div class="step"><div class="n">04</div><div class="t">Recorded forever</div><div class="d">One KUDS moves on-chain — a permanent, public thank-you.</div></div>
+    </div>
+    <a class="btn" href="nominate.html">Nominate someone</a>
+  </section>
+
+  <footer>
+    <p class="foot-creed">"We do not exist to create wealth. We exist to create worth."</p>
+    <div class="foot-meta">
+      Kudos (KUDS) · SPL Token on Solana Mainnet · Mint <code>7Pxu…CuGZ</code><br>
+      Total supply 500 · fixed forever · no exchange listings · no monetary value
+    </div>
+    <p class="disclaimer">
+      KUDS is a non-financial social recognition token. It is not a security, investment, or financial instrument,
+      carries no monetary value by design, and cannot be bought, sold, traded, or redeemed for anything of financial worth.
+      It exists solely to acknowledge positive contributions within communities.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // ---- Award data ----
+  // No KUDS awarded yet. To add a real award, copy this template into the array:
+  //   {name:"Recipient Name", handle:"@handle or context", cat:"mentor",
+  //    label:"Mentorship", story:"What they did, specifically.",
+  //    by:"Who nominated them", date:"Jun 11, 2026", color:"#7a9456",
+  //    tx:"SOLANA_TX_SIGNATURE"},
+  // cat options: mentor / support / build / hero
+  const awards = [
+  ];
+
+  const tagClass = {mentor:"t-mentor",support:"t-support",build:"t-build",hero:"t-hero"};
+  const grid = document.getElementById('grid');
+
+  function render(filter){
+    grid.innerHTML='';
+    const list = filter==='all' ? awards : awards.filter(a=>a.cat===filter);
+
+    if(list.length===0){
+      const empty = document.createElement('div');
+      empty.className='empty-state';
+      empty.innerHTML = `
+        <div class="empty-coin">🪙</div>
+        <h3>${awards.length===0 ? 'The Wall is waiting.' : 'Nothing here yet in this category.'}</h3>
+        <p>${awards.length===0
+          ? "No KUDS have been awarded yet. The first act of kindness recorded here is still out there, waiting to be noticed. It could be one you've seen."
+          : "No awards in this category so far. Try another filter, or be the reason the first one lands here."}</p>
+        <a class="empty-btn" href="nominate.html">Nominate the first →</a>`;
+      grid.appendChild(empty);
+      requestAnimationFrame(()=>empty.classList.add('in'));
+      return;
+    }
+
+    list.forEach((a,i)=>{
+      const initials = a.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+      const txUrl = a.tx
+        ? `https://solscan.io/tx/${a.tx}`
+        : `https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ`;
+      const card = document.createElement('div');
+      card.className='card';
+      card.innerHTML=`
+        <div class="card-top">
+          <div class="avatar" style="background:${a.color}">${initials}</div>
+          <div class="recipient">${a.name}<span>${a.handle}</span></div>
+        </div>
+        <div class="tag ${tagClass[a.cat]}">${a.label}</div>
+        <p class="story">${a.story}</p>
+        <p class="nominated">Nominated by <b>${a.by}</b></p>
+        <div class="chain">
+          <a href="${txUrl}" target="_blank" rel="noopener">⛓ View on Solana</a>
+          <span class="date">${a.date}</span>
+        </div>`;
+      grid.appendChild(card);
+      setTimeout(()=>card.classList.add('in'), 60*i);
+    });
+  }
+
+  // counter
+  const total = awards.length;
+  const awardedEl = document.getElementById('awarded');
+  const remEl = document.getElementById('remaining');
+  if(total===0){
+    awardedEl.textContent = '0';
+    remEl.textContent = '500 still to give';
+  } else {
+    let n=0;
+    const tick=setInterval(()=>{
+      n++; awardedEl.textContent=n;
+      if(n>=total){clearInterval(tick); remEl.textContent=(500-total)+' remaining';}
+    },90);
+    setTimeout(()=>{document.getElementById('barFill').style.width=(total/500*100)+'%';},300);
+  }
+
+  // filters
+  document.getElementById('filters').addEventListener('click',e=>{
+    if(!e.target.classList.contains('chip'))return;
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    e.target.classList.add('active');
+    render(e.target.dataset.f);
+  });
+
+  render('all');
+</script>
+</body>
+</html>
