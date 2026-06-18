@@ -231,11 +231,7 @@
 </div>
 
 <script>
-  // ====== CONFIG ======
-  // Paste your Formspree endpoint here to make submissions land in your inbox.
-  // Get one free at https://formspree.io — it looks like: https://formspree.io/f/abcdwxyz
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnjygpor";   
-  // ====================
+  const WEB3FORMS_KEY = "3a049d42-9262-4ae3-aa1d-814cf8d33be5";
 
   const form = document.getElementById('nomForm');
   const success = document.getElementById('success');
@@ -272,7 +268,6 @@
     ok &= setInvalid('f-by', form.nominator.value.trim()==="");
     const email = form.email.value.trim();
     ok &= setInvalid('f-by', form.nominator.value.trim()==="");
-    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ setInvalid('f-by', false); document.getElementById('f-by'); }
     // email field is its own; validate separately
     const emailField = form.email.closest('.field');
     if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ emailField.classList.add('invalid'); ok = false; }
@@ -288,23 +283,18 @@
     submitBtn.textContent = "Sending…";
 
     const data = new FormData(form);
-
-    // If a real endpoint is configured, POST to Formspree. Otherwise run in demo mode.
-    const configured = FORMSPREE_ENDPOINT && !FORMSPREE_ENDPOINT.startsWith("REPLACE_");
+    data.append("access_key", WEB3FORMS_KEY);
+    data.append("subject", "New KUDS Nomination: " + form.recipient.value.trim());
+    data.append("from_name", "Kudos Nomination Form");
 
     try{
-      if(configured){
-        const res = await fetch(FORMSPREE_ENDPOINT, {
-          method:"POST",
-          headers:{ "Accept":"application/json" },
-          body:data
-        });
-        if(!res.ok) throw new Error("submit failed");
-      } else {
-        // demo mode: brief pause so it feels real in preview
-        await new Promise(r=>setTimeout(r, 600));
-        console.log("DEMO MODE — nomination captured locally:", Object.fromEntries(data.entries()));
-      }
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method:"POST",
+        headers:{ "Accept":"application/json" },
+        body:data
+      });
+      const json = await res.json();
+      if(!res.ok || !json.success) throw new Error("submit failed");
       form.style.display = "none";
       document.querySelector('.form-card .lead').style.display = "none";
       success.classList.add('show');
