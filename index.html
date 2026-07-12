@@ -1,315 +1,696 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kudos (KUDS) — The token you can't buy</title>
-<meta name="description" content="Kudos (KUDS) is a non-financial social recognition token on Solana. Fixed supply of 500. Worth $0 by design. The only way to get one is to be kind.">
-<meta property="og:title" content="Kudos (KUDS) — The token you can't buy">
-<meta property="og:description" content="A social recognition token worth $0 by design. 500 exist, forever. The only way to earn one is kindness.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
-<link rel="icon" href="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#FBF6EC;
-    --paper-2:#F4ECDC;
-    --ink:#2A241D;
-    --ink-soft:#5C5145;
-    --ink-faint:#8A7E6E;
-    --gold:#C29A3B;
-    --gold-deep:#A47C22;
-    --terra:#C16640;
-    --line:#E2D6BF;
-    --card:#FFFDF8;
-    --shadow:rgba(74,58,34,.10);
-    --mono:'JetBrains Mono',monospace;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);
-    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  .wrap{max-width:1060px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-  a{color:var(--gold-deep)}
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wall of Kindness · Kudos × RecognizeGood</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Mulish:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --wall: #E4DCCC;
+      --wall-deep: #D8CFBC;
+      --cotton: #FBF8F1;
+      --ink: #203A2D;
+      --ink-soft: #4F5C4F;
+      --sage: #7A8275;
+      --brass: #B07D2B;
+      --brass-deep: #8A6019;
+      --line: rgba(32, 58, 45, .16);
+      --shadow: 18px 22px 40px -28px rgba(40, 50, 35, .55);
+    }
 
-  /* NAV */
-  nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
-  .brand img{width:40px;height:40px;border-radius:50%;box-shadow:0 3px 10px rgba(164,124,34,.35)}
-  .brand small{display:block;font-weight:500;font-size:11px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase}
-  .nav-links{display:flex;gap:22px;font-size:14px;font-weight:600}
-  .nav-links a{color:var(--ink-soft);text-decoration:none}
-  .nav-links a:hover{color:var(--gold-deep)}
-  @media(max-width:560px){.nav-links{display:none}}
+    * {
+      box-sizing: border-box
+    }
 
-  /* HERO */
-  header{padding:72px 0 36px;text-align:center}
-  .eyebrow{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:22px}
-  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(40px,6.6vw,76px);line-height:1.04;letter-spacing:-.02em}
-  h1 em{font-style:italic;color:var(--terra)}
-  .sub{max-width:580px;margin:24px auto 0;font-size:18px;color:var(--ink-soft)}
-  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-  .btn{font-family:inherit;font-size:15px;font-weight:600;padding:14px 30px;border-radius:32px;cursor:pointer;
-    text-decoration:none;transition:.25s;display:inline-block}
-  .btn-primary{background:linear-gradient(90deg,var(--gold),var(--terra));color:#fff;border:none;
-    box-shadow:0 10px 26px -10px rgba(193,102,64,.55)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(193,102,64,.65)}
-  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--gold)}
+    html {
+      -webkit-text-size-adjust: 100%
+    }
 
-  /* TICKER — the signature */
-  .ticker{max-width:720px;margin:64px auto 0;background:var(--card);border:1px solid var(--line);
-    border-radius:20px;box-shadow:0 22px 50px -34px var(--shadow);overflow:hidden}
-  .ticker-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--line)}
-  .pair{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:14px;font-weight:700}
-  .pair img{width:26px;height:26px;border-radius:50%}
-  .live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.08em}
-  .dot{width:7px;height:7px;border-radius:50%;background:#6FA86B;animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .ticker-body{padding:26px 24px 8px;text-align:left}
-  .price{font-family:var(--mono);font-size:54px;font-weight:700;line-height:1;letter-spacing:-.02em}
-  .price-meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);margin-top:8px}
-  .price-meta b{color:#6FA86B;font-weight:500}
-  .chart{display:block;width:100%;height:150px;margin-top:6px}
-  .ticker-foot{padding:14px 24px 20px;font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink-soft);
-    border-top:1px dashed var(--line);text-align:center}
-  @media(prefers-reduced-motion:reduce){.dot{animation:none}}
+    body {
+      margin: 0;
+      background: radial-gradient(120% 80% at 50% -10%, #ECE5D6 0%, var(--wall) 46%, var(--wall-deep) 100%) fixed;
+      color: var(--ink);
+      font-family: "Mulish", system-ui, -apple-system, Segoe UI, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  /* SECTIONS */
-  section{padding:84px 0 0}
-  .sec-eyebrow{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:14px}
-  h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;margin-bottom:14px}
-  .lede{max-width:620px;color:var(--ink-soft);font-size:17px}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: radial-gradient(rgba(120, 110, 85, .05) 1px, transparent 1.4px);
+      background-size: 5px 5px;
+      mix-blend-mode: multiply;
+      opacity: .6;
+    }
 
-  /* NUMBERS */
-  .numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:40px}
-  .num-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;
-    box-shadow:0 14px 34px -28px var(--shadow)}
-  .num{font-family:'Fraunces',serif;font-weight:900;font-size:44px;color:var(--gold-deep);line-height:1}
-  .num-label{font-size:14px;font-weight:600;margin-top:10px}
-  .num-sub{font-size:13px;color:var(--ink-faint);margin-top:4px;line-height:1.5}
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 40px) 80px
+    }
 
-  /* HOW */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
-  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;position:relative}
-  .step-n{font-family:'Fraunces',serif;font-size:13px;color:var(--gold-deep);font-weight:600;letter-spacing:.12em}
-  .step-t{font-weight:700;font-size:16px;margin-top:10px}
-  .step-d{font-size:14px;color:var(--ink-soft);margin-top:6px;line-height:1.55}
+    /* masthead */
+    .eyebrow {
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-  /* VERIFY */
-  .verify{margin-top:40px;background:linear-gradient(135deg,var(--ink),#3d342a);border-radius:22px;padding:44px 38px;color:var(--paper);
-    position:relative;overflow:hidden}
-  .verify::before{content:"";position:absolute;top:-50%;right:-8%;width:300px;height:300px;border-radius:50%;
-    background:radial-gradient(circle,rgba(194,154,59,.18),transparent 70%)}
-  .verify h3{font-family:'Fraunces',serif;font-weight:500;font-size:26px;margin-bottom:10px;position:relative}
-  .verify p{color:#D8CCB8;max-width:560px;position:relative}
-  .mint-box{margin-top:24px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:12px;
-    padding:16px 18px;font-family:var(--mono);font-size:13px;word-break:break-all;position:relative;display:flex;
-    align-items:center;gap:12px;flex-wrap:wrap}
-  .mint-label{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#C3B7A2;width:100%}
-  .copy-btn{font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.2);
-    background:rgba(255,255,255,.08);color:var(--paper);cursor:pointer;transition:.2s}
-  .copy-btn:hover{background:rgba(255,255,255,.16)}
-  .verify-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;position:relative}
-  .verify-links a{color:var(--gold);font-weight:600;font-size:14px;text-decoration:none}
-  .verify-links a:hover{text-decoration:underline}
+    .eyebrow::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line)
+    }
 
-  /* NOT */
-  .nots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:36px}
-  .not{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;font-size:15px}
-  .not b{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin-bottom:5px}
-  .not span{color:var(--ink-soft);font-size:14px}
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(18px, 3vw, 36px);
+    }
 
-  /* JOIN */
-  .join-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px}
-  .join-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;
-    box-shadow:0 14px 34px -28px var(--shadow);transition:transform .3s}
-  .join-card:hover{transform:translateY(-3px)}
-  .join-card h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:8px}
-  .join-card p{font-size:14.5px;color:var(--ink-soft);margin-bottom:16px}
-  .join-card a{font-weight:600;font-size:14px;text-decoration:none}
-  .join-card a:hover{text-decoration:underline}
+    .masthead>div {
+      flex: 1;
+      min-width: 0;
+    }
 
-  /* FOOTER */
-  footer{border-top:1px solid var(--line);margin-top:90px;padding:44px 0 56px;text-align:center}
-  .foot-creed{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:20px}
-  .foot-meta{font-size:12.5px;color:var(--ink-faint);line-height:1.8}
-  .foot-meta code{background:var(--paper-2);padding:2px 7px;border-radius:5px;font-size:11.5px;font-family:var(--mono)}
-  .disclaimer{max-width:640px;margin:20px auto 0;font-size:11.5px;color:var(--ink-faint);line-height:1.65}
-</style>
+    .hero-marks {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1.6vw, 20px);
+      flex: none;
+    }
+
+    .coin-hero {
+      width: clamp(130px, 20vw, 250px);
+      height: clamp(130px, 20vw, 250px);
+      flex: none;
+      object-fit: contain;
+    }
+
+    .rg-hero {
+      width: clamp(120px, 18vw, 230px);
+      height: clamp(120px, 18vw, 230px);
+      flex: none;
+      object-fit: contain;
+    }
+
+    .mark-x {
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+      color: var(--sage);
+      opacity: .5;
+      flex: none;
+    }
+
+    @media (max-width: 640px) {
+      .masthead {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+    }
+
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: .98;
+      letter-spacing: -.015em;
+      margin: .32em 0 .14em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--brass-deep)
+    }
+
+    .deck {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-soft);
+      max-width: 36ch;
+      margin: 0;
+    }
+
+    .lockup {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-top: 22px;
+      font-size: .82rem;
+      color: var(--sage);
+      letter-spacing: .04em
+    }
+
+    .lockup b {
+      color: var(--ink);
+      font-weight: 700
+    }
+
+    .lockup .x {
+      color: var(--brass);
+      font-family: "Fraunces", serif;
+      font-size: 1rem
+    }
+
+    /* ledger */
+    .ledger {
+      margin: 34px 0 8px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 38px;
+      align-items: baseline;
+    }
+
+    .ledger .item {
+      display: flex;
+      align-items: baseline;
+      gap: 9px
+    }
+
+    .ledger .fig {
+      font-family: "Fraunces", serif;
+      font-size: 1.5rem;
+      color: var(--ink);
+      font-weight: 500
+    }
+
+    .ledger .lab {
+      font-size: .74rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--sage)
+    }
+
+    /* the wall */
+    .wall {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: clamp(18px, 2.4vw, 30px)
+    }
+
+    .note {
+      position: relative;
+      background: linear-gradient(180deg, #FFFDF8, var(--cotton));
+      border: 1px solid rgba(120, 110, 85, .18);
+      border-radius: 3px;
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow);
+      transform: rotate(var(--tilt, 0deg));
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
+    }
+
+    .note::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      width: 74px;
+      height: 20px;
+      transform: translateX(-50%) rotate(var(--tape, -2deg));
+      background: rgba(176, 125, 43, .16);
+      border: 1px solid rgba(176, 125, 43, .22);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .4) inset;
+    }
+
+    .note:hover,
+    .note:focus-within {
+      transform: rotate(0deg) translateY(-4px);
+      box-shadow: 20px 28px 48px -26px rgba(40, 50, 35, .6)
+    }
+
+    .note .tag {
+      display: inline-block;
+      font-size: .66rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--brass-deep);
+      font-weight: 700;
+      margin-bottom: 14px
+    }
+
+    .photo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .photo {
+      width: 64px;
+      height: 64px;
+      flex: none;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--cotton);
+      box-shadow: 0 0 0 1px var(--line)
+    }
+
+    .photo.initials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      color: #EAD9B4;
+      font-family: "Fraunces", serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .who .for {
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sage)
+    }
+
+    .who .to {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1.08;
+      letter-spacing: -.01em
+    }
+
+    .note .act {
+      font-family: "Fraunces", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.04rem;
+      line-height: 1.44;
+      color: var(--ink-soft);
+      margin: 0 0 16px
+    }
+
+    .note .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px dashed var(--line);
+      padding-top: 13px
+    }
+
+    .foot .seal {
+      display: flex;
+      align-items: center;
+      gap: 9px
+    }
+
+    .kudos-coin {
+      width: 46px;
+      height: 46px;
+      flex: none;
+      object-fit: contain;
+    }
+
+    .seal-rim {
+      font-family: "Mulish", sans-serif;
+      font-size: 7.6px;
+      font-weight: 700;
+      fill: #5C3F10
+    }
+
+    .seal-num {
+      font-family: "Fraunces", serif;
+      font-size: 26px;
+      fill: #4A330C;
+      text-anchor: middle;
+      font-weight: 600
+    }
+
+    .seal-label {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15
+    }
+
+    .seal-label .n {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--ink)
+    }
+
+    .seal-label .s {
+      font-size: .66rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--sage)
+    }
+
+    .date {
+      font-size: .72rem;
+      color: var(--sage);
+      text-align: right
+    }
+
+    .story-link {
+      font-size: .74rem;
+      font-weight: 600;
+      color: var(--brass-deep);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(176, 125, 43, .4)
+    }
+
+    .story-link:hover {
+      color: var(--ink)
+    }
+
+    .verify-row {
+      margin-top: 12px;
+      padding-top: 11px;
+      border-top: 1px solid var(--line)
+    }
+
+    .verify-tx {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      font-weight: 600;
+      color: #2E7D46;
+      text-decoration: none;
+      letter-spacing: .02em;
+    }
+
+    .verify-tx:hover {
+      color: var(--ink)
+    }
+
+    footer.page {
+      margin-top: 52px;
+      text-align: center;
+      font-size: .76rem;
+      color: var(--sage);
+      letter-spacing: .04em;
+      line-height: 1.7
+    }
+
+    footer.page b {
+      color: var(--ink-soft)
+    }
+
+    .verify {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 9px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(176, 125, 43, .06);
+      font-size: .76rem;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    .verify a {
+      color: var(--brass-deep);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(176, 125, 43, .4)
+    }
+
+    .verify a:hover {
+      color: var(--ink)
+    }
+
+    .verify-sep {
+      color: var(--sage);
+      opacity: .6
+    }
+
+    .verify-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2E7D46;
+      box-shadow: 0 0 0 3px rgba(46, 125, 70, .18)
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--sage);
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: 1.1rem
+    }
+
+    /* about / history section */
+    .about {
+      margin-top: 64px;
+      padding: clamp(30px, 4.4vw, 52px);
+      background: var(--cotton);
+      border: 1px solid rgba(120, 110, 85, .18);
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+    }
+
+    .about h2 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+      line-height: 1.08;
+      margin: 0 0 18px;
+      letter-spacing: -.01em;
+      text-align: center
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start
+    }
+
+    .about-grid h3 {
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: 1.15rem;
+      color: var(--brass-deep);
+      margin: 0 0 8px
+    }
+
+    .about-grid p {
+      font-size: .96rem;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+      line-height: 1.6
+    }
+
+    .about-grid .lead {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      color: var(--ink)
+    }
+
+    .symbols {
+      margin-top: 28px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      text-align: center
+    }
+
+    .symbols p {
+      max-width: 60ch;
+      margin: 0 auto;
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--ink);
+      line-height: 1.5
+    }
+
+    @media(max-width:680px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 20px
+      }
+    }
+
+    @media(prefers-reduced-motion:no-preference) {
+      .note {
+        opacity: 0;
+        animation: settle .6s cubic-bezier(.2, .7, .2, 1) forwards
+      }
+
+      @keyframes settle {
+        from {
+          opacity: 0;
+          transform: translateY(16px) rotate(var(--tilt, 0deg)) scale(.98)
+        }
+
+        to {
+          opacity: 1;
+          transform: rotate(var(--tilt, 0deg))
+        }
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <nav>
-    <div class="brand">
-      <img src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="KUDS logo">
-      <div>Kudos<small>KUDS · Solana Mainnet</small></div>
-    </div>
-    <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="wall.html">Wall</a>
-      <a href="nominate.html">Nominate</a>
-      <a href="#verify">Verify</a>
-    </div>
-  </nav>
-
-  <header>
-    <div class="eyebrow">A social recognition token</div>
-    <h1>The token you<br><em>can't buy.</em></h1>
-    <p class="sub">Kudos (KUDS) lives on the Solana blockchain. 500 exist, forever. There's no price, no exchange, no trading. The only way to get one is for someone to decide you were kind.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="nominate.html">Nominate someone</a>
-      <a class="btn btn-ghost" href="https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ" target="_blank" rel="noopener">Verify on-chain</a>
-    </div>
-
-    <!-- Signature: the flatline ticker -->
-    <div class="ticker">
-      <div class="ticker-head">
-        <div class="pair">
-          <img src="https://raw.githubusercontent.com/Hdesai96/kudos-token/main/kuds-logo%20(2).png" alt="">
-          KUDS / USD
+    <header>
+      <div class="masthead">
+        <div>
+          <div class="eyebrow">RecognizeGood · Austin</div>
+          <h1>Wall of <em>Kindness</em></h1>
+          <p class="deck">Real people, recognized for real acts of good — each one sealed with a Kudos, one of only 500.
+          </p>
+          <div class="lockup"><b>Kudos</b> <span class="x">×</span> <b>RecognizeGood</b> <span>— recognition that
+              lasts</span></div>
         </div>
-        <div class="live"><span class="dot"></span>LIVE · ALL-TIME CHART</div>
+        <div class="hero-marks">
+          <img class="coin-hero" src="images/kudos-coin.png" alt="Kudos — share a good deed">
+          <span class="mark-x">×</span>
+          <img class="rg-hero" src="images/recognizegood-logo.png" alt="RecognizeGood">
+        </div>
       </div>
-      <div class="ticker-body">
-        <div class="price">$0.00</div>
-        <div class="price-meta">24h change: <b>±0.00%</b> &nbsp;·&nbsp; All-time high: $0.00 &nbsp;·&nbsp; All-time low: $0.00</div>
-        <svg class="chart" viewBox="0 0 600 150" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="0" y1="120" x2="600" y2="120" stroke="#C29A3B" stroke-width="2.5"/>
-          <circle cx="592" cy="120" r="4" fill="#C16640"/>
-          <g stroke="#E2D6BF" stroke-width="1" stroke-dasharray="3,5">
-            <line x1="0" y1="30" x2="600" y2="30"/>
-            <line x1="0" y1="75" x2="600" y2="75"/>
-          </g>
-          <text x="8" y="24" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$1.00</text>
-          <text x="8" y="69" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$0.50</text>
-          <text x="8" y="114" font-family="JetBrains Mono" font-size="10" fill="#8A7E6E">$0.00</text>
-        </svg>
-      </div>
-      <div class="ticker-foot">Projected price, forever. That's the whole point.</div>
+    </header>
+
+    <div class="ledger">
+      <div class="item"><span class="fig" id="stat-count">0</span><span class="lab">people recognized</span></div>
+      <div class="item"><span class="fig">500</span><span class="lab">Kudos in existence</span></div>
+      <div class="item"><span class="fig">∞</span><span class="lab">how long each one lasts</span></div>
     </div>
-  </header>
 
-  <section id="numbers">
-    <div class="sec-eyebrow">The numbers</div>
-    <h2>Deliberately small. Deliberately worthless.</h2>
-    <div class="numbers">
-      <div class="num-card">
-        <div class="num">500</div>
-        <div class="num-label">Total supply</div>
-        <div class="num-sub">Minted once. No more will ever exist.</div>
-      </div>
-      <div class="num-card">
-        <div class="num">$0</div>
-        <div class="num-label">Price, forever</div>
-        <div class="num-sub">No exchange listings. No liquidity pools. No trading. By design.</div>
-      </div>
-      <div class="num-card">
-        <div class="num">1</div>
-        <div class="num-label">Way to earn it</div>
-        <div class="num-sub">Be kind. Someone notices. The community agrees.</div>
-      </div>
-      <div class="num-card">
-        <div class="num">∞</div>
-        <div class="num-label">How long it lasts</div>
-        <div class="num-sub">Every award is recorded on Solana, permanently and publicly.</div>
-      </div>
-    </div>
-  </section>
+    <main class="wall" id="wall"></main>
 
-  <section id="how">
-    <div class="sec-eyebrow">How it works</div>
-    <h2>From a kind act to a permanent record.</h2>
-    <p class="lede">No applications, no purchases, no points to grind. Recognition starts with someone else noticing what you did.</p>
-    <div class="steps">
-      <div class="step"><div class="step-n">STEP 1</div><div class="step-t">An act of kindness</div><div class="step-d">Someone helps, mentors, supports, or quietly fixes the thing so others won't trip on it.</div></div>
-      <div class="step"><div class="step-n">STEP 2</div><div class="step-t">A peer nominates</div><div class="step-d">Another community member notices and puts the act forward for recognition.</div></div>
-      <div class="step"><div class="step-n">STEP 3</div><div class="step-t">The community agrees</div><div class="step-d">Members confirm it reflects the spirit of KUDS — genuine, generous, human.</div></div>
-      <div class="step"><div class="step-n">STEP 4</div><div class="step-t">Written to stay</div><div class="step-d">One KUDS transfers to their wallet. The record lives on Solana for as long as the network does.</div></div>
-    </div>
-  </section>
-
-  <section id="not">
-    <div class="sec-eyebrow">Read this part</div>
-    <h2>What KUDS is not.</h2>
-    <div class="nots">
-      <div class="not"><b>Not an investment</b><span>It pays nothing, returns nothing, and promises nothing. There is no profit to expect.</span></div>
-      <div class="not"><b>Not for sale</b><span>You can't buy it anywhere, and the project will never create a place to sell it.</span></div>
-      <div class="not"><b>Not redeemable</b><span>It can't be exchanged for money, goods, or services. It's a badge of honor, full stop.</span></div>
-      <div class="not"><b>Not a competition</b><span>The leaderboard celebrates character, not rank. There are no prizes to win.</span></div>
-    </div>
-  </section>
-
-  <section id="verify">
-    <div class="sec-eyebrow">Don't trust — verify</div>
-    <h2>It's real. Go look.</h2>
-    <div class="verify">
-      <h3>Live on Solana mainnet</h3>
-      <p>Every claim on this page is publicly checkable. The supply, the transfers, every award ever given — all of it sits on an open ledger anyone can read, no account required.</p>
-      <div class="mint-box">
-        <span class="mint-label">Token mint address</span>
-        <span id="mintAddr">7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ</span>
-        <button class="copy-btn" id="copyBtn">Copy</button>
+    <section class="about">
+      <h2>A little history</h2>
+      <div class="about-grid">
+        <div>
+          <h3>RecognizeGood</h3>
+          <p class="lead">It started with a thank-you that didn't feel like enough.</p>
+          <p>RecognizeGood was founded in Austin around 2009, born from a simple belief: that the good people do
+            deserves to be seen. What began as a humble "Thank You Wall" grew into a foundation devoted to illuminating
+            everyday kindness — through its Legend and Lighthouse Awards, its pay-it-forward giving, and its lasting
+            mission to elevate the spirit of community by recognizing acts of good.</p>
+          <p>The 25 people and groups on this wall are among those RecognizeGood has honored — neighbors who showed up,
+            again and again, for others.</p>
+        </div>
+        <div>
+          <h3>Kudos</h3>
+          <p class="lead">A thank-you made permanent.</p>
+          <p>Kudos is a medium for sharing kindness on the Solana blockchain, created to provide recognition that lasts
+            <b>FOREVER</b>. Each one is <b>non-tradeable</b> and carries no price — its only value is what it means.
+          </p>
+          <p>Because it lives on-chain, a Kudos can't be <b>edited</b>, <b>sold</b>, or <b>erased</b>. It's a way to say
+            "this mattered" that
+            endures. Here, each Kudos is paired with a real act of kindness — a permanent record beside a human story.
+          </p>
+        </div>
       </div>
-      <div class="verify-links">
-        <a href="https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ" target="_blank" rel="noopener">View on Solscan →</a>
-        <a href="https://github.com/Hdesai96/kudos-token" target="_blank" rel="noopener">Token repository →</a>
+      <div class="symbols">
+        <p>Together, they stand for the same idea from two directions: that kindness is worth noticing, worth honoring,
+          and worth keeping. RecognizeGood tells the story; Kudos makes it last.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="join">
-    <div class="sec-eyebrow">Take part</div>
-    <h2>Help us make kindness visible.</h2>
-    <p class="lede">KUDS only works if people notice each other. That's the entire mechanism.</p>
-    <div class="join-cards">
-      <div class="join-card">
-        <h4>See the Wall of Kindness</h4>
-        <p>Every KUDS ever awarded, and the story behind each one.</p>
-        <a href="wall.html">Visit the Wall →</a>
+    <footer class="page">
+      <div class="verify">
+        <span class="verify-dot"></span>
+        <span>Verified on Solana</span>
+        <a href="https://solscan.io/token/7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ" target="_blank"
+          rel="noopener">view the Kudos token</a>
+        <span class="verify-sep">·</span>
+        <a href="https://solscan.io/account/C9K8mkjJeeddZaJ1WJwAWKcXbiD9drk8gorZoKFAxgzf" target="_blank"
+          rel="noopener">see
+          the recognitions held by RecognizeGood</a>
       </div>
-      <div class="join-card">
-        <h4>Read the whitepaper</h4>
-        <p>The full philosophy: tokenomics, governance, and the anti-speculation design.</p>
-        <a href="Kudos_KUDS_Token_Whitepaper_Mainnet.pdf" target="_blank" rel="noopener">Read it →</a>
+      <b>The Wall of Kindness</b> — a project by Harshni Desai, in collaboration with RecognizeGood.<br>
+      Each Kudos is a non-tradeable Solana token · fixed supply of 500 · $0.00 by design.
+    </footer>
+
+  </div>
+
+  <!-- data file: edit recipients.js to add/change people -->
+  <script src="recipients.js"></script>
+  <script>
+    // gentle deterministic tilt so cards look hand-pinned but stable on refresh
+    function tiltFor(n) { const t = [-1.1, 0.8, -0.6, 1.1, -0.9, 0.6, 1.2, -1.0]; return t[n % t.length] + 'deg'; }
+    function tapeFor(n) { const t = [3, -2, 2, -3, 2, -2, 3, -2]; return t[n % t.length] + 'deg'; }
+
+    function initials(name) {
+      return name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    }
+
+    function seal(num) {
+      return `<img class="kudos-coin" src="images/kudos-coin.png" alt="Kudos coin — share a good deed">`;
+    }
+
+    function card(r) {
+      const n = r.kudos_number;
+      const photo = r.photo
+        ? `<img class="photo" src="${r.photo}" alt="${r.name}">`
+        : `<div class="photo initials" aria-hidden="true">${initials(r.name)}</div>`;
+      const tag = r.program ? `<span class="tag">${r.program}</span>` : '';
+      const date = r.date ? `<span class="date">${r.date}</span>` : '';
+      // bottom-right slot: prefer the on-chain verify link, then a story link, then the date
+      let rightSlot = date;
+      if (r.story_url) rightSlot = `<a class="story-link" href="${r.story_url}">Read their story →</a>`;
+      const verify = r.tx
+        ? `<a class="verify-tx" href="https://solscan.io/tx/${r.tx}" target="_blank" rel="noopener">✓ Verify this recognition on Solana</a>`
+        : '';
+      return `<article class="note" style="--tilt:${tiltFor(n)};--tape:${tapeFor(n)}">
+      ${tag}
+      <div class="photo-wrap">
+        ${photo}
+        <div class="who"><div class="for">In thanks to</div><div class="to">${r.name}</div></div>
       </div>
-      <div class="join-card">
-        <h4>Nominate someone</h4>
-        <p>Seen an act of kindness that deserves to be permanent? Tell us about it.</p>
-        <a href="nominate.html">Submit a nomination →</a>
+      ${verify ? `<div class="verify-row">${verify}</div>` : ''}
+      <p class="act">${r.description}</p>
+      <div class="foot">
+        <span class="seal">${seal(n)}<span class="seal-label"><span class="n">Kudos No. ${n}</span><span class="s">of 500</span></span></span>
+        ${rightSlot}
       </div>
-    </div>
-  </section>
+      </article>`;
+    }
 
-  <footer>
-    <p class="foot-creed">"Worth nothing. Means everything."</p>
-    <div class="foot-meta">
-      Kudos (KUDS) · SPL Token on Solana Mainnet<br>
-      Mint <code>7PxuFRWRfzyBz1jYFYn4shGTHY5U5YhTCNXbKwt3CuGZ</code><br>
-      Total supply 500 · no exchange listings · no monetary value
-    </div>
-    <p class="disclaimer">
-      KUDS is a non-financial social recognition token. It is not a security, investment product, or financial
-      instrument of any kind. It carries no monetary value by design, pays no returns, and cannot be bought, sold,
-      traded, or redeemed for currency, goods, or services through any mechanism endorsed by the Kudos Project.
-      It exists solely to acknowledge and celebrate positive contributions within communities.
-    </p>
-  </footer>
+    const wall = document.getElementById('wall');
+    const list = (typeof RECIPIENTS !== 'undefined') ? RECIPIENTS.slice() : [];
+    list.sort((a, b) => a.kudos_number - b.kudos_number);
 
-</div>
+    if (list.length === 0) {
+      wall.innerHTML = `<div class="empty">Add people in <code>recipients.js</code> and they'll appear here.</div>`;
+    } else {
+      wall.innerHTML = list.map(card).join('');
+      document.getElementById('stat-count').textContent = list.length;
+    }
 
-<script>
-  document.getElementById('copyBtn').addEventListener('click', function(){
-    const addr = document.getElementById('mintAddr').textContent.trim();
-    navigator.clipboard.writeText(addr).then(()=>{
-      this.textContent = 'Copied ✓';
-      setTimeout(()=>{ this.textContent = 'Copy'; }, 2000);
-    });
-  });
-</script>
+    document.querySelectorAll('.note').forEach((el, i) => { el.style.animationDelay = (i * 55) + 'ms'; });
+  </script>
 </body>
+
 </html>
